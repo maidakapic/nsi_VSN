@@ -1,0 +1,74 @@
+﻿
+<div class="column col-sm-12 col-xs-12" id="main">
+    <div class="padding">
+        <div class="full col-sm-9">
+            <!-- content -->
+            <div class="row">
+                <!-- main col left -->
+                <div class="col-sm-7">
+                    <img src="../../../Content/img/register_bg.jpg" style="width:100%" /> 
+                </div>
+                <div class="col-sm-5">
+                    <h2>Sign Up</h2>
+                    It's free and always will be.
+                    <form role="form" class="m-t-12">
+                        <div class="form-group">
+                            <div class="col-sm-6" style="padding-left:0px">
+                                <label for="exampleInputEmail1">First name</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="First name" ng-model="registrationModel.firstName">
+                            </div>
+                            <div class="col-sm-6" style="padding-right:0px">
+                                <label for="exampleInputEmail1">Last name</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Last name" ng-model="registrationModel.lastName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" ng-model="registrationModel.email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="registrationModel.passwordHash">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Repeat password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="confirmPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Birth date</label>
+                            <p class="input-group">
+                                <input type="text" class="form-control"
+                                       datepicker-popup="{{format}}"
+                                       ng-model="registrationModel.birthDate"
+                                       is-open="opened"
+                                       datepicker-options="dateOptions"
+                                       ng-required="true"
+                                       close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" 
+                                            ng-click="open($event)">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                Male
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                Female
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-lg" ng-click="signUp()">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

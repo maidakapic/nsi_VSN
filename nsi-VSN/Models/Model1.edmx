@@ -1,0 +1,753 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="vsndbModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="vsndbModelStoreContainer">
+          <EntitySet Name="comments" EntityType="vsndbModel.Store.comments" store:Type="Tables" Schema="vsndb" />
+          <EntitySet Name="likes" EntityType="vsndbModel.Store.likes" store:Type="Tables" Schema="vsndb" />
+          <EntitySet Name="messages" EntityType="vsndbModel.Store.messages" store:Type="Tables" Schema="vsndb" />
+          <EntitySet Name="notification_types" EntityType="vsndbModel.Store.notification_types" store:Type="Tables" Schema="vsndb" />
+          <EntitySet Name="notifications" EntityType="vsndbModel.Store.notifications" store:Type="Tables" Schema="vsndb" />
+          <EntitySet Name="post_types" EntityType="vsndbModel.Store.post_types" store:Type="Tables" Schema="vsndb" />
+          <EntitySet Name="posts" EntityType="vsndbModel.Store.posts" store:Type="Tables" Schema="vsndb" />
+          <EntitySet Name="roles" EntityType="vsndbModel.Store.roles" store:Type="Tables" Schema="vsndb" />
+          <EntitySet Name="users" EntityType="vsndbModel.Store.users" store:Type="Tables" Schema="vsndb" />
+          <AssociationSet Name="commentedBy_id_fk" Association="vsndbModel.Store.commentedBy_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="commentedPost_id_fk" Association="vsndbModel.Store.commentedPost_id_fk">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="likedBy_id_fk" Association="vsndbModel.Store.likedBy_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="likes" EntitySet="likes" />
+          </AssociationSet>
+          <AssociationSet Name="likedPost_id_fk" Association="vsndbModel.Store.likedPost_id_fk">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="likes" EntitySet="likes" />
+          </AssociationSet>
+          <AssociationSet Name="notificationType_id_fk" Association="vsndbModel.Store.notificationType_id_fk">
+            <End Role="notification_types" EntitySet="notification_types" />
+            <End Role="notifications" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="notificator_id_fk" Association="vsndbModel.Store.notificator_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="notifications" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="postNotification_id_fk" Association="vsndbModel.Store.postNotification_id_fk">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="notifications" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="postType_id_fk" Association="vsndbModel.Store.postType_id_fk">
+            <End Role="post_types" EntitySet="post_types" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="publisher_id_fk" Association="vsndbModel.Store.publisher_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="receiver_id_fk" Association="vsndbModel.Store.receiver_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="sender_id_fk" Association="vsndbModel.Store.sender_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="userRole_id_fk" Association="vsndbModel.Store.userRole_id_fk">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="comments">
+          <Key>
+            <PropertyRef Name="comment_id" />
+          </Key>
+          <Property Name="comment_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="commentedPost_id" Type="int" Nullable="false" />
+          <Property Name="commentedBy_id" Type="int" Nullable="false" />
+          <Property Name="commentText" Type="varchar" Nullable="false" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="likes">
+          <Key>
+            <PropertyRef Name="likes_id" />
+          </Key>
+          <Property Name="likes_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="likedBy_id" Type="int" Nullable="false" />
+          <Property Name="likedPost_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="message_id" />
+          </Key>
+          <Property Name="message_id" Type="int" Nullable="false" />
+          <Property Name="content" Type="varchar" Nullable="false" MaxLength="500" />
+          <Property Name="time" Type="timestamp" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="sender_id" Type="int" Nullable="false" />
+          <Property Name="receiver_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification_types">
+          <Key>
+            <PropertyRef Name="notificationType_id" />
+          </Key>
+          <Property Name="notificationType_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="textNotification" Type="varchar" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="notifications">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="notificationTime" Type="timestamp" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="notificationType_id" Type="int" Nullable="false" />
+          <Property Name="notificator_id" Type="int" Nullable="false" />
+          <Property Name="seen" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="postNotification_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="post_types">
+          <Key>
+            <PropertyRef Name="postType_id" />
+          </Key>
+          <Property Name="postType_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="textTypePost" Type="varchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="posts">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="varchar" Nullable="false" MaxLength="250" />
+          <Property Name="postText" Type="text" />
+          <Property Name="postImage" Type="blob" />
+          <Property Name="publisher_id" Type="int" Nullable="false" />
+          <Property Name="postType_id" Type="int" Nullable="false" />
+          <Property Name="publishTime" Type="timestamp" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="visible" Type="varchar" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="roleName" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="roleDescription" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="lastName" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="profileImage" Type="blob" />
+          <Property Name="birthDate" Type="date" />
+          <Property Name="username" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="passwordHash" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="salt" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="livingPlace" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="active" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="banned" Type="varchar" Nullable="false" MaxLength="1" />
+          <Property Name="mail" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="userRole" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="commentedBy_id_fk">
+          <End Role="users" Type="vsndbModel.Store.users" Multiplicity="1" />
+          <End Role="comments" Type="vsndbModel.Store.comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="commentedBy_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="commentedPost_id_fk">
+          <End Role="posts" Type="vsndbModel.Store.posts" Multiplicity="1" />
+          <End Role="comments" Type="vsndbModel.Store.comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="commentedPost_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="likedBy_id_fk">
+          <End Role="users" Type="vsndbModel.Store.users" Multiplicity="1" />
+          <End Role="likes" Type="vsndbModel.Store.likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="likes">
+              <PropertyRef Name="likedBy_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="likedPost_id_fk">
+          <End Role="posts" Type="vsndbModel.Store.posts" Multiplicity="1" />
+          <End Role="likes" Type="vsndbModel.Store.likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="likes">
+              <PropertyRef Name="likedPost_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="notificationType_id_fk">
+          <End Role="notification_types" Type="vsndbModel.Store.notification_types" Multiplicity="1" />
+          <End Role="notifications" Type="vsndbModel.Store.notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_types">
+              <PropertyRef Name="notificationType_id" />
+            </Principal>
+            <Dependent Role="notifications">
+              <PropertyRef Name="notificationType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="notificator_id_fk">
+          <End Role="users" Type="vsndbModel.Store.users" Multiplicity="1" />
+          <End Role="notifications" Type="vsndbModel.Store.notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="notifications">
+              <PropertyRef Name="notificator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postNotification_id_fk">
+          <End Role="posts" Type="vsndbModel.Store.posts" Multiplicity="1" />
+          <End Role="notifications" Type="vsndbModel.Store.notifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="notifications">
+              <PropertyRef Name="postNotification_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postType_id_fk">
+          <End Role="post_types" Type="vsndbModel.Store.post_types" Multiplicity="1" />
+          <End Role="posts" Type="vsndbModel.Store.posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post_types">
+              <PropertyRef Name="postType_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="postType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="publisher_id_fk">
+          <End Role="users" Type="vsndbModel.Store.users" Multiplicity="1" />
+          <End Role="posts" Type="vsndbModel.Store.posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="publisher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="receiver_id_fk">
+          <End Role="users" Type="vsndbModel.Store.users" Multiplicity="1" />
+          <End Role="messages" Type="vsndbModel.Store.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="receiver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sender_id_fk">
+          <End Role="users" Type="vsndbModel.Store.users" Multiplicity="1" />
+          <End Role="messages" Type="vsndbModel.Store.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="sender_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userRole_id_fk">
+          <End Role="roles" Type="vsndbModel.Store.roles" Multiplicity="1" />
+          <End Role="users" Type="vsndbModel.Store.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="userRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="vsndbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="vsndbEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="comments" EntityType="vsndbModel.comment" />
+          <EntitySet Name="likes" EntityType="vsndbModel.like" />
+          <EntitySet Name="messages" EntityType="vsndbModel.message" />
+          <EntitySet Name="notification_types" EntityType="vsndbModel.notification_types" />
+          <EntitySet Name="notifications" EntityType="vsndbModel.notification" />
+          <EntitySet Name="post_types" EntityType="vsndbModel.post_types" />
+          <EntitySet Name="posts" EntityType="vsndbModel.post" />
+          <EntitySet Name="roles" EntityType="vsndbModel.role" />
+          <EntitySet Name="users" EntityType="vsndbModel.user" />
+          <AssociationSet Name="commentedBy_id_fk" Association="vsndbModel.commentedBy_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="commentedPost_id_fk" Association="vsndbModel.commentedPost_id_fk">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="comments" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="likedBy_id_fk" Association="vsndbModel.likedBy_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="likes" EntitySet="likes" />
+          </AssociationSet>
+          <AssociationSet Name="likedPost_id_fk" Association="vsndbModel.likedPost_id_fk">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="likes" EntitySet="likes" />
+          </AssociationSet>
+          <AssociationSet Name="receiver_id_fk" Association="vsndbModel.receiver_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="sender_id_fk" Association="vsndbModel.sender_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="notificationType_id_fk" Association="vsndbModel.notificationType_id_fk">
+            <End Role="notification_types" EntitySet="notification_types" />
+            <End Role="notifications" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="notificator_id_fk" Association="vsndbModel.notificator_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="notifications" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="postNotification_id_fk" Association="vsndbModel.postNotification_id_fk">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="notifications" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="postType_id_fk" Association="vsndbModel.postType_id_fk">
+            <End Role="post_types" EntitySet="post_types" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="publisher_id_fk" Association="vsndbModel.publisher_id_fk">
+            <End Role="users" EntitySet="users" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="userRole_id_fk" Association="vsndbModel.userRole_id_fk">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="comment_id" />
+          </Key>
+          <Property Name="comment_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="commentedPost_id" Type="Int32" Nullable="false" />
+          <Property Name="commentedBy_id" Type="Int32" Nullable="false" />
+          <Property Name="commentText" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="user" Relationship="vsndbModel.commentedBy_id_fk" FromRole="comments" ToRole="users" />
+          <NavigationProperty Name="post" Relationship="vsndbModel.commentedPost_id_fk" FromRole="comments" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="like">
+          <Key>
+            <PropertyRef Name="likes_id" />
+          </Key>
+          <Property Name="likes_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="likedBy_id" Type="Int32" Nullable="false" />
+          <Property Name="likedPost_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="vsndbModel.likedBy_id_fk" FromRole="likes" ToRole="users" />
+          <NavigationProperty Name="post" Relationship="vsndbModel.likedPost_id_fk" FromRole="likes" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="message">
+          <Key>
+            <PropertyRef Name="message_id" />
+          </Key>
+          <Property Name="message_id" Type="Int32" Nullable="false" />
+          <Property Name="content" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="time" Type="DateTime" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="sender_id" Type="Int32" Nullable="false" />
+          <Property Name="receiver_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="vsndbModel.receiver_id_fk" FromRole="messages" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="vsndbModel.sender_id_fk" FromRole="messages" ToRole="users" />
+        </EntityType>
+        <EntityType Name="notification_types">
+          <Key>
+            <PropertyRef Name="notificationType_id" />
+          </Key>
+          <Property Name="notificationType_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="textNotification" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="notifications" Relationship="vsndbModel.notificationType_id_fk" FromRole="notification_types" ToRole="notifications" />
+        </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="notificationTime" Type="DateTime" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="notificationType_id" Type="Int32" Nullable="false" />
+          <Property Name="notificator_id" Type="Int32" Nullable="false" />
+          <Property Name="seen" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="postNotification_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="notification_types" Relationship="vsndbModel.notificationType_id_fk" FromRole="notifications" ToRole="notification_types" />
+          <NavigationProperty Name="user" Relationship="vsndbModel.notificator_id_fk" FromRole="notifications" ToRole="users" />
+          <NavigationProperty Name="post" Relationship="vsndbModel.postNotification_id_fk" FromRole="notifications" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="post_types">
+          <Key>
+            <PropertyRef Name="postType_id" />
+          </Key>
+          <Property Name="postType_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="textTypePost" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="posts" Relationship="vsndbModel.postType_id_fk" FromRole="post_types" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="post_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="250" Unicode="false" FixedLength="false" />
+          <Property Name="postText" Type="String" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Name="postImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="publisher_id" Type="Int32" Nullable="false" />
+          <Property Name="postType_id" Type="Int32" Nullable="false" />
+          <Property Name="publishTime" Type="DateTime" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="visible" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="comments" Relationship="vsndbModel.commentedPost_id_fk" FromRole="posts" ToRole="comments" />
+          <NavigationProperty Name="likes" Relationship="vsndbModel.likedPost_id_fk" FromRole="posts" ToRole="likes" />
+          <NavigationProperty Name="notifications" Relationship="vsndbModel.postNotification_id_fk" FromRole="posts" ToRole="notifications" />
+          <NavigationProperty Name="post_types" Relationship="vsndbModel.postType_id_fk" FromRole="posts" ToRole="post_types" />
+          <NavigationProperty Name="user" Relationship="vsndbModel.publisher_id_fk" FromRole="posts" ToRole="users" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="roleName" Type="String" Nullable="false" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="roleDescription" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="users" Relationship="vsndbModel.userRole_id_fk" FromRole="roles" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="lastName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="profileImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="birthDate" Type="DateTime" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="passwordHash" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="salt" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="livingPlace" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="active" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="banned" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+          <Property Name="mail" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="userRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="comments" Relationship="vsndbModel.commentedBy_id_fk" FromRole="users" ToRole="comments" />
+          <NavigationProperty Name="likes" Relationship="vsndbModel.likedBy_id_fk" FromRole="users" ToRole="likes" />
+          <NavigationProperty Name="messages" Relationship="vsndbModel.receiver_id_fk" FromRole="users" ToRole="messages" />
+          <NavigationProperty Name="messages1" Relationship="vsndbModel.sender_id_fk" FromRole="users" ToRole="messages" />
+          <NavigationProperty Name="notifications" Relationship="vsndbModel.notificator_id_fk" FromRole="users" ToRole="notifications" />
+          <NavigationProperty Name="posts" Relationship="vsndbModel.publisher_id_fk" FromRole="users" ToRole="posts" />
+          <NavigationProperty Name="role" Relationship="vsndbModel.userRole_id_fk" FromRole="users" ToRole="roles" />
+        </EntityType>
+        <Association Name="commentedBy_id_fk">
+          <End Role="users" Type="vsndbModel.user" Multiplicity="1" />
+          <End Role="comments" Type="vsndbModel.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="commentedBy_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="commentedPost_id_fk">
+          <End Role="posts" Type="vsndbModel.post" Multiplicity="1" />
+          <End Role="comments" Type="vsndbModel.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="comments">
+              <PropertyRef Name="commentedPost_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="likedBy_id_fk">
+          <End Role="users" Type="vsndbModel.user" Multiplicity="1" />
+          <End Role="likes" Type="vsndbModel.like" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="likes">
+              <PropertyRef Name="likedBy_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="likedPost_id_fk">
+          <End Role="posts" Type="vsndbModel.post" Multiplicity="1" />
+          <End Role="likes" Type="vsndbModel.like" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="likes">
+              <PropertyRef Name="likedPost_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="receiver_id_fk">
+          <End Role="users" Type="vsndbModel.user" Multiplicity="1" />
+          <End Role="messages" Type="vsndbModel.message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="receiver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sender_id_fk">
+          <End Role="users" Type="vsndbModel.user" Multiplicity="1" />
+          <End Role="messages" Type="vsndbModel.message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="sender_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="notificationType_id_fk">
+          <End Role="notification_types" Type="vsndbModel.notification_types" Multiplicity="1" />
+          <End Role="notifications" Type="vsndbModel.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_types">
+              <PropertyRef Name="notificationType_id" />
+            </Principal>
+            <Dependent Role="notifications">
+              <PropertyRef Name="notificationType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="notificator_id_fk">
+          <End Role="users" Type="vsndbModel.user" Multiplicity="1" />
+          <End Role="notifications" Type="vsndbModel.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="notifications">
+              <PropertyRef Name="notificator_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postNotification_id_fk">
+          <End Role="posts" Type="vsndbModel.post" Multiplicity="1" />
+          <End Role="notifications" Type="vsndbModel.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="post_id" />
+            </Principal>
+            <Dependent Role="notifications">
+              <PropertyRef Name="postNotification_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postType_id_fk">
+          <End Role="post_types" Type="vsndbModel.post_types" Multiplicity="1" />
+          <End Role="posts" Type="vsndbModel.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post_types">
+              <PropertyRef Name="postType_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="postType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="publisher_id_fk">
+          <End Role="users" Type="vsndbModel.user" Multiplicity="1" />
+          <End Role="posts" Type="vsndbModel.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="publisher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userRole_id_fk">
+          <End Role="roles" Type="vsndbModel.role" Multiplicity="1" />
+          <End Role="users" Type="vsndbModel.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="userRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="vsndbModelStoreContainer" CdmEntityContainer="vsndbEntities">
+          <EntitySetMapping Name="comments">
+            <EntityTypeMapping TypeName="vsndbModel.comment">
+              <MappingFragment StoreEntitySet="comments">
+                <ScalarProperty Name="comment_id" ColumnName="comment_id" />
+                <ScalarProperty Name="commentedPost_id" ColumnName="commentedPost_id" />
+                <ScalarProperty Name="commentedBy_id" ColumnName="commentedBy_id" />
+                <ScalarProperty Name="commentText" ColumnName="commentText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="likes">
+            <EntityTypeMapping TypeName="vsndbModel.like">
+              <MappingFragment StoreEntitySet="likes">
+                <ScalarProperty Name="likes_id" ColumnName="likes_id" />
+                <ScalarProperty Name="likedBy_id" ColumnName="likedBy_id" />
+                <ScalarProperty Name="likedPost_id" ColumnName="likedPost_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="messages">
+            <EntityTypeMapping TypeName="vsndbModel.message">
+              <MappingFragment StoreEntitySet="messages">
+                <ScalarProperty Name="message_id" ColumnName="message_id" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="sender_id" ColumnName="sender_id" />
+                <ScalarProperty Name="receiver_id" ColumnName="receiver_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notification_types">
+            <EntityTypeMapping TypeName="vsndbModel.notification_types">
+              <MappingFragment StoreEntitySet="notification_types">
+                <ScalarProperty Name="notificationType_id" ColumnName="notificationType_id" />
+                <ScalarProperty Name="textNotification" ColumnName="textNotification" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notifications">
+            <EntityTypeMapping TypeName="vsndbModel.notification">
+              <MappingFragment StoreEntitySet="notifications">
+                <ScalarProperty Name="notification_id" ColumnName="notification_id" />
+                <ScalarProperty Name="notificationTime" ColumnName="notificationTime" />
+                <ScalarProperty Name="notificationType_id" ColumnName="notificationType_id" />
+                <ScalarProperty Name="notificator_id" ColumnName="notificator_id" />
+                <ScalarProperty Name="seen" ColumnName="seen" />
+                <ScalarProperty Name="postNotification_id" ColumnName="postNotification_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="post_types">
+            <EntityTypeMapping TypeName="vsndbModel.post_types">
+              <MappingFragment StoreEntitySet="post_types">
+                <ScalarProperty Name="postType_id" ColumnName="postType_id" />
+                <ScalarProperty Name="textTypePost" ColumnName="textTypePost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="posts">
+            <EntityTypeMapping TypeName="vsndbModel.post">
+              <MappingFragment StoreEntitySet="posts">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="postText" ColumnName="postText" />
+                <ScalarProperty Name="postImage" ColumnName="postImage" />
+                <ScalarProperty Name="publisher_id" ColumnName="publisher_id" />
+                <ScalarProperty Name="postType_id" ColumnName="postType_id" />
+                <ScalarProperty Name="publishTime" ColumnName="publishTime" />
+                <ScalarProperty Name="visible" ColumnName="visible" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="vsndbModel.role">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleDescription" ColumnName="roleDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="vsndbModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="profileImage" ColumnName="profileImage" />
+                <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="passwordHash" ColumnName="passwordHash" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="livingPlace" ColumnName="livingPlace" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="banned" ColumnName="banned" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="userRole" ColumnName="userRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
