@@ -11,11 +11,14 @@ namespace nsi_VSN.Controllers
     public class MessageController : ApiController
     {
         private vsndbEntities db = new vsndbEntities();
+       
         //get all messages from user (sender)
         // GET api/message
+        [HttpGet]
+        [ActionName("GetMessagesFromSender")]
         public IEnumerable<MessageModel> GetMessagesFromSender(int senderID)
         {
-            List<message> messages = db.messages.ToList<message>();
+            List<message> messages = db.messages.Where(b => b.sender_id == senderID).ToList<message>();
             List<MessageModel> poruke = new List<MessageModel>();
 
             foreach (message m in messages) 
@@ -30,6 +33,9 @@ namespace nsi_VSN.Controllers
                     mm.time = m.time;
                     mm.content = m.content;
 
+                    mm.reciver_name = m.user.username;
+                    mm.sender_name = m.user1.username;
+
                     poruke.Add(mm);
 
                 }
@@ -39,14 +45,17 @@ namespace nsi_VSN.Controllers
 
         //get all messages from user (reciver)
         // GET api/message
+        [HttpGet]
+        [ActionName("GetMessagesFromReciver")]
         public IEnumerable<MessageModel> GetMessagesFromReciver(int reciverID)
         {
-            List<message> messages = db.messages.ToList<message>();
+         
+            List<message> messages = db.messages.Where(b => b.receiver_id == reciverID).ToList<message>();
             List<MessageModel> poruke = new List<MessageModel>();
 
             foreach (message m in messages)
             {
-                if (m.sender_id == reciverID)
+                if (m.receiver_id == reciverID)
                 {
                     MessageModel mm = new MessageModel();
 
@@ -55,6 +64,9 @@ namespace nsi_VSN.Controllers
                     mm.sender_id = m.sender_id;
                     mm.time = m.time;
                     mm.content = m.content;
+
+                    mm.reciver_name = m.user.username;
+                    mm.sender_name = m.user1.username;
 
                     poruke.Add(mm);
 

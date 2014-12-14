@@ -37,31 +37,7 @@ namespace nsi_VSN.Controllers
             return notifikacije;
         }
 
-        //get all notification from post
-        // GET api/notification
-        public IEnumerable<NotificationModel> GetNotificationFromPost(int postId)
-        {
-            List<notification> notifications = db.notifications.ToList<notification>();
-            List<NotificationModel> notifikacije = new List<NotificationModel>();
-            foreach (notification n in notifications)
-            {
-                if (n.notificator_id == postId)
-                {
-                    NotificationModel nm = new NotificationModel();
-
-                    nm.notification_id = n.notification_id;
-                    nm.notificationTime = n.notificationTime;
-                    nm.notificationType_id = n.notificationType_id;
-                    nm.notificator_id = n.notificator_id;
-                    nm.postNotification_id = n.postNotification_id;
-                    nm.seen = n.seen;
-
-                    notifikacije.Add(nm);
-                }
-            }
-            return notifikacije;
-        }
-
+        
         // GET api/notification/5
         public string Get(int id)
         {

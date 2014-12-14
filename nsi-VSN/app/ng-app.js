@@ -71,7 +71,7 @@ app.run(function ($rootScope, $cookieStore, $http, $state) {
     };
 
     $rootScope.login = function () {
-        $http.post('/api/ddd/token', $rootScope.credentials).success(function (data) {
+        $http.post('/api/access/token', $rootScope.credentials).success(function (data) {
             conosle.log('data', data);
         }).error(function (error) {
 

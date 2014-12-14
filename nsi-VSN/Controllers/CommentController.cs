@@ -15,9 +15,12 @@ namespace nsi_VSN.Controllers
 
         //get all comment from post
         // GET api/comment
-        public IEnumerable<CommentModel> GetCommentFrompost(int postId)
+
+        [HttpGet]
+        [ActionName("GetCommentFromPost")]
+        public IEnumerable<CommentModel> GetCommentFromPost(int postId)
         {
-            List<comment> comments = db.comments.ToList<comment>();
+            List<comment> comments = db.comments.Where(b => b.commentedPost_id == postId).ToList<comment>();
             List<CommentModel> komentari = new List<CommentModel>();
             foreach (comment c in comments) 
             {
@@ -28,6 +31,9 @@ namespace nsi_VSN.Controllers
                     cm.commentedBy_id = c.commentedBy_id;
                     cm.commentedPost_id = c.commentedPost_id;
                     cm.commentText = c.commentText;
+
+                    cm.commentedBy_username = c.user.username;
+
                     komentari.Add(cm);
                 }
             }
@@ -36,9 +42,12 @@ namespace nsi_VSN.Controllers
 
         //get all comment from user
         // GET api/comment
+       
+        [HttpGet]
+        [ActionName("GetCommentFromUser")]
         public IEnumerable<CommentModel> GetCommentFromUser(int userId)
         {
-            List<comment> comments = db.comments.ToList<comment>();
+            List<comment> comments = db.comments.Where(b => b.commentedBy_id == userId).ToList<comment>();
             List<CommentModel> komentari = new List<CommentModel>();
             foreach (comment c in comments)
             {
@@ -49,6 +58,9 @@ namespace nsi_VSN.Controllers
                     cm.commentedBy_id = c.commentedBy_id;
                     cm.commentedPost_id = c.commentedPost_id;
                     cm.commentText = c.commentText;
+
+                    cm.commentedBy_username = c.user.username;
+
                     komentari.Add(cm);
                 }
             }

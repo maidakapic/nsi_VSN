@@ -13,5 +13,6 @@ namespace nsi_VSN.Models
         public int commentedPost_id { get; set; }
         public int commentedBy_id { get; set; }
         public string commentText { get; set; }
+        public string commentedBy_username { get; set; }
     }
 }
