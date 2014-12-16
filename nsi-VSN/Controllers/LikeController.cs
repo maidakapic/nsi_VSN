@@ -10,7 +10,7 @@ namespace nsi_VSN.Controllers
 {
     public class LikeController : ApiController
     {
-        private vsndbEntities db = new vsndbEntities();
+        private vsndbEntities1 db = new vsndbEntities1();
 
         //get all like from post
         // GET api/like
@@ -64,8 +64,28 @@ namespace nsi_VSN.Controllers
         }
 
         // POST api/like
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [ActionName("PostLike")]
+        public HttpResponseMessage PostLike([FromBody] LikeModel like)
         {
+            like l = new like();
+            l.likedBy_id = like.likedBy_id;
+            l.likedPost_id = like.likedPost_id;
+            l.likes_id = like.likes_id;
+
+            db.likes.Add(l);
+            db.SaveChanges();
+
+            NotificationModel nc = new NotificationModel();
+            nc.notificator_id = l.likedBy_id;
+            nc.postNotification_id = l.likedPost_id;
+            nc.notificationType_id = 1;
+            nc.notificationTime = DateTime.Now;
+
+            NotificationController not = new NotificationController();
+            not.PostNotifiction(nc);
+
+            return Request.CreateResponse(HttpStatusCode.OK, l);
         }
 
         // PUT api/like/5
