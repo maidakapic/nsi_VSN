@@ -10,7 +10,7 @@ namespace nsi_VSN.Controllers
 {
     public class NotificationController : ApiController
     {
-        private vsndbEntities db = new vsndbEntities();
+        private vsndbEntities1 db = new vsndbEntities1();
 
         //get all notification from user
         // GET api/notification
@@ -25,7 +25,7 @@ namespace nsi_VSN.Controllers
                     NotificationModel nm = new NotificationModel();
 
                     nm.notification_id = n.notification_id;
-                    nm.notificationTime = n.notificationTime;
+                    nm.notificationTime = n.notificationTime.Value;
                     nm.notificationType_id = n.notificationType_id;
                     nm.notificator_id = n.notificator_id;
                     nm.postNotification_id = n.postNotification_id;
@@ -45,8 +45,21 @@ namespace nsi_VSN.Controllers
         }
 
         // POST api/notification
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [ActionName("PostNotifiction")]
+        public HttpResponseMessage PostNotifiction([FromBody] NotificationModel ntf)
         {
+            notification n = new notification();
+            n.notificator_id = ntf.notificator_id;
+            n.notificationType_id = ntf.notificationType_id;
+            n.postNotification_id = ntf.postNotification_id;
+            n.seen = ntf.seen;
+
+            
+            db.notifications.Add(n);
+            db.SaveChanges();
+            
+            return Request.CreateResponse(HttpStatusCode.OK, n);
         }
 
         // PUT api/notification/5

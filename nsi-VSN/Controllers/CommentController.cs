@@ -11,7 +11,7 @@ namespace nsi_VSN.Controllers
     public class CommentController : ApiController
     {
 
-        private vsndbEntities db = new vsndbEntities();
+        private vsndbEntities1 db = new vsndbEntities1();
 
         //get all comment from post
         // GET api/comment
@@ -74,8 +74,29 @@ namespace nsi_VSN.Controllers
         }
 
         // POST api/comment
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [ActionName("PostComment")]
+        public HttpResponseMessage PostComment([FromBody]CommentModel comment)
         {
+            comment c = new comment();
+            c.commentedBy_id = comment.commentedBy_id;
+            c.commentedPost_id = comment.commentedPost_id;
+            c.commentText = comment.commentText;
+
+            db.comments.Add(c);
+            db.SaveChanges();
+            
+            NotificationModel nc = new NotificationModel();
+            nc.notificator_id = c.commentedBy_id;
+            nc.postNotification_id = c.commentedPost_id;
+            nc.notificationType_id = 2;
+            nc.notificationTime = DateTime.Now;
+
+            NotificationController not = new NotificationController();
+            not.PostNotifiction(nc);
+
+            return Request.CreateResponse(HttpStatusCode.OK, c);
+
         }
 
         // PUT api/comment/5
