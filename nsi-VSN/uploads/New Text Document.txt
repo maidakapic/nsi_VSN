@@ -1,0 +1,43 @@
+var app = angular.module("klix", ["ui.router"]);
+
+app.run(function ($rootScope) {
+    //ovo ovdje se pokrece samo prilikom refresha stranice i mora se definisati varijabla da se zna da postoji
+    $rootScope.loggedUser = {username:'',isLogged:false};
+});
+
+app.config(function ($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise('/login');
+    //
+    // For any unmatched url, redirect to /state1
+
+    //
+    // Now set up the states
+    $stateProvider.state('login', {
+        url: "/login",
+        templateUrl: "Scripts/views/login/login.html",
+        controller:'loginController'
+    });
+
+    $stateProvider.state('content', {
+        url: "/content",
+        templateUrl: "Scripts/views/content/content.html",
+        controller: "contentController"
+    });
+    $stateProvider.state('registration', {
+        url: "/registration",
+        templateUrl: "Scripts/views/registration/registration.html",
+        controller:'registrationController'
+    });
+
+    $stateProvider.state('news', {
+        url: "/news",
+        templateUrl: "Scripts/views/news/news.html",
+        controller: 'newsController'
+    });
+
+});
+
+
+
+
